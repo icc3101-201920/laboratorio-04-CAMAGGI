@@ -19,8 +19,12 @@ namespace Laboratorio_3_OOP_201902
 
         public void AddCard(Card card)
         {
-            throw new NotImplementedException();
+             cards.Add(card);   
         }
+          
+    
+
+
         public void DestroyCard(int cardId)
         {
             throw new NotImplementedException();

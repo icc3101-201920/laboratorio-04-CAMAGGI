@@ -1,6 +1,7 @@
 ﻿using Laboratorio_3_OOP_201902.Cards;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Laboratorio_3_OOP_201902
@@ -91,6 +92,54 @@ namespace Laboratorio_3_OOP_201902
         public void Play()
         {
             throw new NotImplementedException();
+        }
+        public bool ToBool(string str)
+        {
+            if (str == "true")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void CreateDeck()
+        {
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Files\Decks.txt";
+            StreamReader reader = new StreamReader(path);
+            Deck deck = new Deck();
+            while (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+                string[] characterParams = line.Split(',');
+                Console.WriteLine(characterParams[0]);
+                Enums.EnumType enumType = (Enums.EnumType)Enum.Parse(typeof(Enums.EnumType), characterParams[2]);
+                    
+                switch (characterParams[0])
+                {
+                        
+                    case "START":
+                        deck = new Deck();
+                        break;
+                    case "END":
+                        decks.Add(deck);
+                        break;
+                    case "CombatCard":
+                        //example CombatCard,Dethmold,range,null,6,false
+                        
+                        deck.AddCard(new CombatCard(characterParams[1], enumType, characterParams[3],
+                                                    Convert.ToInt32( characterParams[4]), ToBool(characterParams[5])));
+                        break;
+                    case "SpecialCard":
+                        //example SpecialCard,Biting Frost,weather,Sets the strength of all melee cards to 1 for both players
+                        deck.AddCard(new SpecialCard(characterParams[1], enumType, characterParams[3]));
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
     }
 }

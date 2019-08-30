@@ -22,7 +22,7 @@ namespace Laboratorio_3_OOP_201902.Cards
             }
         }
         //Constructor
-        public SpecialCard(string name, string type, string effect)
+        public SpecialCard(string name, Enums.EnumType type, string effect)
         {
             Name = name;
             Type = type;
