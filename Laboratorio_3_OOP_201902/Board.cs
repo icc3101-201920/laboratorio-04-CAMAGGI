@@ -41,7 +41,7 @@ namespace Laboratorio_3_OOP_201902
         }
 
         //Metodos
-        public void AddCard(Card card, int playerId = -1, string buffType = null)
+        public void AddCard(Card card, int playerId = -1, Enums.EnumType buffType = Enums.EnumType.None )
         {
             //Combat o Special
             if (card.GetType().Name == nameof(CombatCard))
@@ -49,13 +49,13 @@ namespace Laboratorio_3_OOP_201902
                 //Agregar la de combate a su fila correspondiente
                 if (playerId == 0 || playerId == 1)
                 {
-                    if (playerCards[playerId].ContainsKey(card.Type))
+                    if (playerCards[playerId].ContainsKey(card.Type.ToString()))
                     {
-                        playerCards[playerId][card.Type].Add(card);
+                        playerCards[playerId][card.Type.ToString()].Add(card);
                     }
                     else
                     {
-                        playerCards[playerId].Add(card.Type, new List<Card>() { card });
+                        playerCards[playerId].Add(card.Type.ToString(), new List<Card>() { card });
                     }
                 }
                 else
@@ -66,12 +66,12 @@ namespace Laboratorio_3_OOP_201902
             else
             {
                 //Es capitan?
-                if ((playerId == 0 || playerId == 1) && buffType == null)
+                if ((playerId == 0 || playerId == 1) && buffType == Enums.EnumType.None )
                 {
                     //Revisar si no se a agregado el capitan
-                    if (!playerCards[playerId].ContainsKey(card.Type))
+                    if (!playerCards[playerId].ContainsKey(card.Type.ToString()))
                     {
-                        playerCards[playerId].Add(card.Type, new List<Card>() { card });
+                        playerCards[playerId].Add(card.Type.ToString(), new List<Card>() { card });
                     }
                     else
                     {
@@ -79,16 +79,16 @@ namespace Laboratorio_3_OOP_201902
                     }   
                 }
                 //Es buffer?
-                else if ((playerId == 0 || playerId == 1) && buffType != null)
+                else if ((playerId == 0 || playerId == 1) && buffType != Enums.EnumType.None)
                 {
                     //Revisar si no se a agregado un buffer en la fila primero.
-                    if (!playerCards[playerId].ContainsKey(card.Type + buffType))
+                    if (!playerCards[playerId].ContainsKey(card.Type.ToString() + buffType.ToString()))
                     {
-                        playerCards[playerId].Add(card.Type + buffType, new List<Card>() { card });
+                        playerCards[playerId].Add(card.Type.ToString() + buffType.ToString(), new List<Card>() { card });
                     }
                     else
                     {
-                        throw new FieldAccessException($"Player has already played a buffer card in {buffType} row");
+                        throw new FieldAccessException($"Player has already played a buffer card in {buffType.ToString()} row");
                     }
                 }
                 else

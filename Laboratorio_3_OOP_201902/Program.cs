@@ -9,8 +9,17 @@ namespace Laboratorio_3_OOP_201902
         static void Main(string[] args)
         {
             
-            Game game = new Game();
-            game.CreateDeck();
+            Deck deck = new Deck();
+            //example CombatCard,Dethmold,range,null,6,false
+
+            deck.AddCard(new CombatCard("Dethmold",Enums.EnumType.range, null, 6, false));
+            
+            
+            //example SpecialCard,Biting Frost,weather,Sets the strength of all melee cards to 1 for both players
+            deck.AddCard(new SpecialCard ("Biting Frost",Enums.EnumType.weather, "Sets the strength of all melee cards to 1 for both players"));
+
+
+            Console.WriteLine(deck.Cards[1].Effect);
         }
     }
 }

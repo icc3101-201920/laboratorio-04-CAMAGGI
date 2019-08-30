@@ -109,12 +109,13 @@ namespace Laboratorio_3_OOP_201902
             string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Files\Decks.txt";
             StreamReader reader = new StreamReader(path);
             Deck deck = new Deck();
+            decks = new List<Deck>();
+            
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
                 string[] characterParams = line.Split(',');
-                Console.WriteLine(characterParams[0]);
-                Enums.EnumType enumType = (Enums.EnumType)Enum.Parse(typeof(Enums.EnumType), characterParams[2]);
+            
                     
                 switch (characterParams[0])
                 {
@@ -128,18 +129,23 @@ namespace Laboratorio_3_OOP_201902
                     case "CombatCard":
                         //example CombatCard,Dethmold,range,null,6,false
                         
-                        deck.AddCard(new CombatCard(characterParams[1], enumType, characterParams[3],
+                        deck.AddCard(new CombatCard(characterParams[1], (Enums.EnumType)Enum.Parse(typeof(Enums.EnumType),
+                                                    characterParams[2]), characterParams[3],
                                                     Convert.ToInt32( characterParams[4]), ToBool(characterParams[5])));
                         break;
                     case "SpecialCard":
                         //example SpecialCard,Biting Frost,weather,Sets the strength of all melee cards to 1 for both players
-                        deck.AddCard(new SpecialCard(characterParams[1], enumType, characterParams[3]));
+                        deck.AddCard(new SpecialCard(characterParams[1], (Enums.EnumType)Enum.Parse(typeof(Enums.EnumType), 
+                                                     characterParams[2]), characterParams[3]));
                         break;
 
                     default:
                         break;
                 }
+                
             }
+           
+
         }
     }
 }
