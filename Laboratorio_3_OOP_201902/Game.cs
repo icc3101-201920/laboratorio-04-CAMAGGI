@@ -14,7 +14,7 @@ namespace Laboratorio_3_OOP_201902
         private List<Deck> decks;
         private Board boardGame;
         private bool endGame;
-
+        private List<Card> captains;
         //Constructor
         public Game()
         {
@@ -102,6 +102,41 @@ namespace Laboratorio_3_OOP_201902
             else
             {
                 return false;
+            }
+        }
+        public void CreateCaptains()
+        {
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Files\Captains.txt";
+            StreamReader reader = new StreamReader(path);
+
+            captains = new List<Card>();
+            while (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+                string[] characterParams = line.Split(',');
+
+
+                switch (characterParams[0])
+                {
+
+                  
+                    case "CombatCard":
+                        //example CombatCard,Dethmold,range,null,6,false
+
+                        captains.Add(new CombatCard(characterParams[1], (Enums.EnumType)Enum.Parse(typeof(Enums.EnumType),
+                                                    characterParams[2]), characterParams[3],
+                                                    Convert.ToInt32(characterParams[4]), ToBool(characterParams[5])));
+                        break;
+                    case "SpecialCard":
+                        //example SpecialCard,Biting Frost,weather,Sets the strength of all melee cards to 1 for both players
+                        captains.Add(new SpecialCard(characterParams[1], (Enums.EnumType)Enum.Parse(typeof(Enums.EnumType),
+                                                     characterParams[2]), characterParams[3]));
+                        break;
+
+                    default:
+                        break;
+                }
+                
             }
         }
         public void CreateDeck()
